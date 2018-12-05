@@ -11,6 +11,13 @@
 #include <string>
 using namespace std;
 
+//CONVERSION FUNCTION
+//***************************************************************************************************************
+// Preconditions: Takes in valid file name, and three maps pertaining to registers, array registers, and opcodes.
+// Postconditions: The valid filename is used to create a binary file that the simulator will use.
+void codeToBinary(string codeFileName, unordered_map<string, string> registerMap, unordered_map<string, string> arrayRegisterMap, unordered_map<string, string> opcodeMap);
+//***************************************************************************************************************
+
 //MAIN
 //***************************************************************************************************************
 int main() {
@@ -55,11 +62,15 @@ int main() {
     
     
     
-    
     return EXIT_SUCCESS;
 }
 //***************************************************************************************************************
 
-
+//CONVERSION FUNCTION
+//***************************************************************************************************************
+void codeToBinary(string codeFileName, unordered_map<string, string> registerMap, unordered_map<string, string> arrayRegisterMap, unordered_map<string, string> opcodeMap) {
+    
+}
+//***************************************************************************************************************
 
 
