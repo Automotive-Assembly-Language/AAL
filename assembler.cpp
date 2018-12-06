@@ -144,5 +144,3 @@ void codeToBinary(string codeFileName, unordered_map<string, string> registerMap
     cout << "Code Successfully Assembled\n";
 }
 //***************************************************************************************************************
-
-

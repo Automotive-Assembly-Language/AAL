@@ -42,33 +42,90 @@ int main() {
     arrayRegisterMap["10"] = arrayVector;
     arrayRegisterMap["11"] = arrayVector;
     
-    unordered_set<string> opcodeMap;
-    //format is opcode
-    opcodeMap.insert("00000");
-    opcodeMap.insert("00001");
-    opcodeMap.insert("00010");
+    //open binary.txt file to read instructions from
+    string binaryFileName = "binary.txt";
+    ifstream binaryFile(binaryFileName);
+    if (binaryFile.fail()) {
+        cout << "binary file open failed\n";
+        return;
+    }
     
-    //format is opcode, register
-    opcodeMap.insert("00011");
-    opcodeMap.insert("00101");
-    opcodeMap.insert("00111");
-    opcodeMap.insert("01001");
-    opcodeMap.insert("01011");
-    opcodeMap.insert("01100");
-    opcodeMap.insert("01101");
-    opcodeMap.insert("01111");
-    opcodeMap.insert("10001");
-    
-    //format is opcode, array register, register
-    opcodeMap.insert("00100");
-    opcodeMap.insert("00110");
-    opcodeMap.insert("01000");
-    opcodeMap.insert("01010");
-    opcodeMap.insert("01110");
-    opcodeMap.insert("10000");
-    opcodeMap.insert("10010");
-
-    
+    //go through binary.txt file and simulate code
+    while (!binaryFile.eof()) {
+        
+        //take in instruction
+        string instruction;
+        binaryFile >> instruction;
+        
+        //get opcode from instruction
+        string opcode;
+        opcode = instruction.substr(0, 5);
+        
+        //opcode with format: opcode then 0s
+        if (opcode == "00000") {
+            <#statements#>
+        }
+        else if (opcode == "00001") {
+            <#statements#>
+        }
+        else if (opcode == "00010") {
+            <#statements#>
+        }
+        //opcode with format: opcode, register, then 0s
+        else if (opcode == "00011") {
+            <#statements#>
+        }
+        else if (opcode == "00101") {
+            <#statements#>
+        }
+        else if (opcode == "00111") {
+            <#statements#>
+        }
+        else if (opcode == "01001") {
+            <#statements#>
+        }
+        else if (opcode == "01011") {
+            <#statements#>
+        }
+        else if (opcode == "01100") {
+            <#statements#>
+        }
+        else if (opcode == "01101") {
+            <#statements#>
+        }
+        else if (opcode == "01111") {
+            <#statements#>
+        }
+        else if (opcode == "10001") {
+            <#statements#>
+        }
+        //opcode with format: opcode, array register, register, then 0s
+        else if (opcode == "00100") {
+            <#statements#>
+        }
+        else if (opcode == "00110") {
+            <#statements#>
+        }
+        else if (opcode == "01000") {
+            <#statements#>
+        }
+        else if (opcode == "01010") {
+            <#statements#>
+        }
+        else if (opcode == "01110") {
+            <#statements#>
+        }
+        else if (opcode == "10000") {
+            <#statements#>
+        }
+        else if (opcode == "10010") {
+            <#statements#>
+        }
+        else {
+            cout << "Invalid Opcode: " << opcode << endl;
+            return;
+        }
+    }
     
     return EXIT_SUCCESS;
 }
