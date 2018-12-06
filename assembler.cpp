@@ -1,7 +1,7 @@
 //***************************************************************************************************************
 // File: assembler.cpp
 // Team Members: Enrique Pesqueda, Sebastian Ruiz, Armando Miguel, Samuel Peters
-// Last Modified: December 4, 2018
+// Date: December 4, 2018
 // Description: This files takes in a txt file with "automotive assembly" code and creates a binary txt file to be used by our simulator.
 //***************************************************************************************************************
 #include <iostream>
@@ -137,6 +137,10 @@ void codeToBinary(string codeFileName, unordered_map<string, string> registerMap
             binaryFile << opcodeMap[opcode] << arrayRegisterMap[arrayReg] << registerMap[reg] << "000000\n";
         }
     }
+    //close files
+    codeFile.close();
+    binaryFile.close();
+    //inform that assembly was successful
     cout << "Code Successfully Assembled\n";
 }
 //***************************************************************************************************************
