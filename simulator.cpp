@@ -17,6 +17,9 @@ using namespace std;
 //***************************************************************************************************************
 int main() {
     
+    //CREATE ACCUMULATOR REGISTER
+    int acc;
+    
     //CREATE REGISTER, ARRAY, AND OPCODE REGISTER MAPPINGS
     unordered_map<string, int> registerMap;
     registerMap["000"] = 0;
@@ -65,6 +68,7 @@ int main() {
     opcodeMap.insert("10000");
     opcodeMap.insert("10010");
 
+    
     
     return EXIT_SUCCESS;
 }
