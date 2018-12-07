@@ -146,7 +146,9 @@ int main() {
             return EXIT_SUCCESS;
         }
     }
-    
+   
+    //close binary file
+    binaryFile.close();
     
     return EXIT_SUCCESS;
 }
