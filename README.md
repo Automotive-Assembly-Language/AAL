@@ -84,10 +84,10 @@ Custom assembly language with car themed syntax.
 * **Flush**
   - Summary: Sets value in register to 0.
     - Syntax:
-      > FLUSH R1
-* **Burn out**
+    > FLUSH R1
+* **Burn Out**
   - Summary: Sets value in index of array to 0.
     - Syntax: 
-      > BURNOUT AR1 R1
+    > BURNOUT AR1 R1
   
   
