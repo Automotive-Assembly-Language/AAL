@@ -3,6 +3,7 @@ Custom assembly language with car themed syntax.
 
 ## Syntax Reference 
 ### Input / Output
+####__________________________________________________________________________________________________________________________
 * **Intake**
   - Summary: Stores keyboard input into acc.
     - Syntax: 
@@ -16,8 +17,8 @@ Custom assembly language with car themed syntax.
   - Summary: Ends the program.
     - Syntax: 
       > BRAKE
-
 ### Arithmetic
+####__________________________________________________________________________________________________________________________
 * **Accelerate**
   - Summary: Adds data from given register to acc.
     - Syntax:
@@ -50,8 +51,8 @@ Custom assembly language with car themed syntax.
   - Summary: Divides data from given array at the index represented by a given register to acc.
     - Syntax:
       > KNOCK AR1 R1
-
 ### Branch
+####__________________________________________________________________________________________________________________________
 * **Coil Over**
   - Summary: Takes it back to a given line of code to run sequentially.
     - Syntax: Will 
@@ -60,11 +61,13 @@ Custom assembly language with car themed syntax.
   - Summary: Skips next line of code based on condition: 
     - Syntax: 
       > SKIPGEAR (C)
-    - 1: Skips if AC < 0
-    - 2: Skips if AC = 0
-    - 3: Skips if AC > 0
+    - 100: Skips if AC < 0
+    - 200: Skips if AC = 0
+    - 300: Skips if AC > 0
        
 ### Data Transfering
+####__________________________________________________________________________________________________________________________
+
 * **Fuel**
   - Summary: Loads register value into acc.
     - Syntax:
@@ -82,6 +85,7 @@ Custom assembly language with car themed syntax.
     - Syntax:
       > TRUNK AR1 R1
 ### Data Managing
+####__________________________________________________________________________________________________________________________
 * **Flush**
   - Summary: Sets value in register to 0.
     - Syntax:
