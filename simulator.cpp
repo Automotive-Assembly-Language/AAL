@@ -63,12 +63,14 @@ int main() {
 
         //opcode with format: opcode then 0s
         if (opcode == "00000") {
+            cout << "Input: ";
             cin >> acc;
         }
         else if (opcode == "00001") {
-            cout << acc << endl;
+            cout << "Output: " << acc << endl;
         }
         else if (opcode == "00010") {
+            cout << "Program Terminated\n";
             return EXIT_SUCCESS;
         }
         //opcode with format: opcode, register, then 0s
