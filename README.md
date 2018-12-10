@@ -60,9 +60,9 @@ Custom assembly language with car themed syntax.
   - Summary: Skips next line of code based on condition: 
     - Syntax: 
       > SKIPGEAR (C)
-    - 000: Skips if AC < 0
-    - 400: Skips if AC = 0
-    - 800: Skips if AC > 0
+    - 1: Skips if AC < 0
+    - 2: Skips if AC = 0
+    - 3: Skips if AC > 0
        
 ### Data Transfering
 * **Fuel**
