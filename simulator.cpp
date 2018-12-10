@@ -121,20 +121,45 @@ int main() {
             //since register is valid, divide value in reg from acc
             acc /= registerMap[reg];
         }
-        else if (opcode == "01011") {
-
-        }
-        else if (opcode == "01100") {
-
-        }
-        else if (opcode == "01101") {
-
-        }
         //***************************************************************************************************************
-        //CONSOLE FUNCTION
+        //JUMP FUNCTION
         //***************************************************************************************************************
         // Preconditions: Checks if the Register Map is valid.
-        // Postconditions: If valid set the found Register Map equal to the Acc.
+        // Postconditions: If valid jumps to the line of code based on integer value in register.
+        else if (opcode == "01011") {
+          string reg = instruction.substr(5,3);
+          auto it = registerMap.find(reg);
+          if(it == registerMap.end()){
+            cout << reg << " is not a valid register" << endl;
+            return EXIT_SUCCESS;
+          }
+            binaryFile.close()
+            binaryFile.open(binaryFileName);
+          for(int i = 0; i < registerMap[reg] - 1; ++i){
+              binaryFile >> instruction;
+          }
+        }
+
+        else if (opcode == "01100") {
+          string cond = instruction.substr(5,3);
+          if(cond == "100" && acc < 0)
+            binaryFile >> instruction;
+          else if(cond == "110" && acc == 0)
+            binaryFile >> instruction;
+          else if(cond = "111" && acc > 0)
+            binaryFile >> instruction;
+        }
+
+        else if (opcode == "01101") {
+          string reg = instruction.substr(5,3);
+          auto it = registerMap.find(reg);
+          if(it == registerMap.end()){
+              cout << reg << " is not a valid register" << endl;
+              return EXIT_SUCCESS;
+              }
+          acc = registerMap[reg];
+        }
+
         else if (opcode == "01111") {
             string reg = instruction.substr(5,3)
             if(registerMap.find(reg)== registerMap.end()){
@@ -224,11 +249,37 @@ int main() {
             //since everything is valid, multiply from acc
             acc *= (arrayRegisterMap[arrayReg])[(registerMap[reg])];
         }
+
         else if (opcode == "01010") {
-
+          string arrReg = instruction.substr(5,2);
+          string reg = instruction.substr(9,3);
+          auto itArray = arrayRegisterMap.find(arrReg);
+          auto itRef = registerMap.find(reg);
+          if(itArray == arrayRegisterMap.end()){
+              cout << arrReg << " is not a valid array register" << endl;
+              return EXIT_SUCCESS;
+              }
+          else if(itRef == registerMap.end()){
+            cout << reg << " is not a valid register" << endl;
+            return EXIT_SUCCESS;
+            }
+            acc /= arrayRegisterMap[arrReg][registerMap[reg]];
         }
-        else if (opcode == "01110") {
 
+        else if (opcode == "01110") {
+          string arrReg = instruction.substr(5,2);
+          string reg = instruction.substr(9,3);
+          auto itArray = arrayRegisterMap.find(arrReg);
+          auto itRef = registerMap.find(reg);
+          if(itArray == arrayRegisterMap.end()){
+              cout << arrReg << " is not a valid array register" << endl;
+              return EXIT_SUCCESS;
+              }
+          else if(itRef == registerMap.end()){
+            cout << reg << " is not a valid register" << endl;
+            return EXIT_SUCCESS;
+        }
+          acc = arrayRegisterMap[arrReg][registerMap[reg]];
         }
         //***************************************************************************************************************
         //TRUNK FUNCTION
