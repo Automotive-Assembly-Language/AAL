@@ -49,15 +49,6 @@ int main() {
         cout << "binary file open failed\n";
         return EXIT_SUCCESS;
     }
-    //
-    // //format is opcode, array register, register
-    // opcodeMap["UPSHIFT"] = "00100";
-    // opcodeMap["DOWNSHIFT"] = "00110";
-    // opcodeMap["TWINTURBO"] = "01000";
-    // opcodeMap["KNOCK"] = "01010";
-    // opcodeMap["REFUEL"] = "01110";
-    // opcodeMap["TRUNK"] = "10000";
-    // opcodeMap["BURNOUT"] = "10010";
 
     //go through binary.txt file and simulate code
     while (!binaryFile.eof()) {

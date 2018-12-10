@@ -98,11 +98,28 @@ void codeToBinary(string codeFileName, unordered_map<string, string> registerMap
             return;
         }
         //add binary to binary.txt based on formats
+        else if (opcode == "SKIPGEAR") {
+            string condition = "";
+            codeFile >> condition;
+            if (condition != 100 && condition != 200 && condition != 300) {
+                cout << "Invalid Condition: " << condition << endl;
+                return EXIT_SUCCESS;
+            }
+            if (condition == 100) {
+                binaryFile << opcodeMap[opcode] << "100" << "00000000\n"
+            }
+            else if (condition == 200) {
+                binaryFile << opcodeMap[opcode] << "110" << "00000000\n"
+            }
+            else if (condition == 100) {
+                binaryFile << opcodeMap[opcode] << "111" << "00000000\n"
+            }
+        }
         else if (opcode == "INTAKE" || opcode == "EXHAUST" || opcode == "BRAKE") {
             //this format is opcode followed by 0s
             binaryFile << opcodeMap[opcode] << "00000000000\n";
         }
-        else if (opcode == "ACCELLERATE" || opcode == "DECELLERATE" || opcode == "TURBO" || opcode == "MISFIRE" || opcode == "COILOVER" || opcode == "SKIPGEAR" || opcode == "FUEL" || opcode == "CONSOLE" || opcode == "FLUSH") {
+        else if (opcode == "ACCELLERATE" || opcode == "DECELLERATE" || opcode == "TURBO" || opcode == "MISFIRE" || opcode == "COILOVER" || opcode == "FUEL" || opcode == "CONSOLE" || opcode == "FLUSH") {
             string reg;
             codeFile >> reg;
             //check if register is invalid
