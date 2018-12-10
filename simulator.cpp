@@ -139,12 +139,38 @@ int main() {
         else if (opcode == "01101") {
 
         }
+        //***************************************************************************************************************
+        //CONSOLE FUNCTION
+        //***************************************************************************************************************
+        // Preconditions: Checks if the Register Map is valid.
+        // Postconditions: If valid set the found Register Map equal to the Acc.
         else if (opcode == "01111") {
-
+            string reg = instruction.substr(5,3)
+            if(registerMap.find(reg)== registerMap.end()){
+                cout<< "Invalid Register Map: " << reg <<endl;
+                return EXIT_SUCCESS;
+            }
+            else{
+                registerMap[reg] = acc;
+            }
         }
+        //***************************************************************************************************************
+        //FLUSH FUNCTION
+        //***************************************************************************************************************
+        // Preconditions: Checks if the Register Map is valid.
+        // Postconditions: If valid set the found Register Map equal to 0.
         else if (opcode == "10001") {
+            string reg = instruction.substr(5,3)
+            if(registerMap .find(reg) == registerMap.end()){
+                cout<< "Invalid Register Map: " << reg <<endl;
+                return EXIT_SUCCESS;
+            }
+            else{
+                registerMap[reg] = 0;
+            }
 
         }
+        //***************************************************************************************************************
         //opcode with format: opcode, array register, register, then 0s
         else if (opcode == "00100") {
             string arrReg = instruction.substr(5,2);
@@ -213,12 +239,51 @@ int main() {
         else if (opcode == "01110") {
 
         }
+        //***************************************************************************************************************
+        //TRUNK FUNCTION
+        //***************************************************************************************************************
+        // Preconditions: Checks if the Array Register Map and the Register Map is valid.
+        // Postconditions: If both are valid then, set the Register Map to the Acc.
         else if (opcode == "10000") {
-
+            string arrReg = instructions.substr(5,2);
+            if(arrayRegisterMap.find(arrReg) == arrayRegisterMap.end()){
+                cout<<"Invalid Array Register Map: "<<arrReg<<endl;
+                return EXIT_SUCCESS;
+            }
+            else{
+                string reg = instructions.substr(7,3);
+                if(registerMap.find(reg)== registerMap.end()){
+                    cout<<"Invalid Register Map: "<< reg <<endl;
+                    return EXIT_SUCCESS;
+                }
+                else{
+                    registerMap[reg] = acc;
+                }
+            }
         }
+        //***************************************************************************************************************
+        //BURNOUT FUNCTION
+        //***************************************************************************************************************
+        // Preconditions:Checks if the Array Register Map and the Register Map is valid.
+        // Postconditions: If both are valid then, set the Register Map to 0.
         else if (opcode == "10010") {
-
+            string arrReg = instructions.substr(5,2);
+            if(arrayRegisterMap.find(arrReg) == arrayRegisterMap.end()){
+                cout<<"Invalid Array Register Map: "<<arrReg<<endl;
+                return EXIT_SUCCESS;
+            }
+            else{
+                string reg = instructions.substr(7,3);
+                if(registerMap.find(reg)== registerMap.end()){
+                    cout<<"Invalid Register Map: "<< reg <<endl;
+                    return EXIT_SUCCESS;
+                }
+                else{
+                    registerMap[reg] = 0;
+                }
+            }
         }
+        //***************************************************************************************************************
         else {
             cout << "Invalid Opcode: " << opcode << endl;
             return EXIT_SUCCESS;
