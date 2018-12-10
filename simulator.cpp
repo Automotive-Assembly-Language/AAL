@@ -18,7 +18,7 @@ using namespace std;
 int main() {
     
     //CREATE ACCUMULATOR REGISTER
-    int acc;
+    int acc = 0;
     
     //CREATE REGISTER, ARRAY, AND OPCODE REGISTER MAPPINGS
     unordered_map<string, int> registerMap;
@@ -63,7 +63,7 @@ int main() {
         
         //opcode with format: opcode then 0s
         if (opcode == "00000") {
-            <#statements#>
+            statements
         }
         else if (opcode == "00001") {
             <#statements#>
@@ -76,13 +76,43 @@ int main() {
             <#statements#>
         }
         else if (opcode == "00101") {
-            <#statements#>
+            //DECELLERATE(subtract opcode)
+            
+            //take in next 3 values from instruction, which are the register to use
+            string reg = instruction.substr(5, 3);
+            //check if register is valid
+            if (registerMap.find(reg) == registerMap.end()) {
+                cout << "Invalid Register: " << reg << endl;
+                return EXIT_SUCCESS;
+            }
+            //since register is valid subtract value in reg from acc
+            acc -= registerMap[reg];
         }
         else if (opcode == "00111") {
-            <#statements#>
+            //TURBO(multiply opcode)
+            
+            //take in next 3 values from instruction, which are the register to use
+            string reg = instruction.substr(5, 3);
+            //check if register is valid
+            if (registerMap.find(reg) == registerMap.end()) {
+                cout << "Invalid Register: " << reg << endl;
+                return EXIT_SUCCESS;
+            }
+            //since register is valid, multiply value in reg from acc
+            acc *= registerMap[reg];
         }
         else if (opcode == "01001") {
-            <#statements#>
+            //MISFIRE(divide opcode)
+            
+            //take in next 3 values from instruction, which are the register to use
+            string reg = instruction.substr(5, 3);
+            //check if register is valid
+            if (registerMap.find(reg) == registerMap.end()) {
+                cout << "Invalid Register: " << reg << endl;
+                return EXIT_SUCCESS;
+            }
+            //since register is valid, divide value in reg from acc
+            acc /= registerMap[reg];
         }
         else if (opcode == "01011") {
             <#statements#>
@@ -104,10 +134,50 @@ int main() {
             <#statements#>
         }
         else if (opcode == "00110") {
-            <#statements#>
+            //DOWNSHIFT(subtract array value opcode)
+            
+            //check next 2 bits in instruction to get array register, then see if it is valid
+            string arrayReg = instruction.substr(5, 2);
+            if (arrayRegisterMap.find(arrayReg) == arrayRegisterMap.end()) {
+                cout << "Invalid Array Register: " << arrayReg << endl;
+                return EXIT_SUCCESS;
+            }
+            //since array register is valid, get register and check if it is valid
+            string reg = instruction.substr(7, 3);
+            if (registerMap.find(reg) == registerMap.end()) {
+                cout << "Invalid Register: " << reg << endl;
+                return EXIT_SUCCESS;
+            }
+            //since array register and register are valid, check reg to make sure it contains a valid index (0-99)
+            if (registerMap[reg] > 99 || registerMap[reg] < 0) {
+                cout << "Invalid Index: " << registerMap[reg] << endl;
+                return EXIT_SUCCESS;
+            }
+            //since everything is valid, subtract from acc
+            acc -= (arrayRegisterMap[arrayReg])[(registerMap[reg])];
         }
         else if (opcode == "01000") {
-            <#statements#>
+            //TWINTURBO(multiply array value opcode)
+            
+            //check next 2 bits in instruction to get array register, then see if it is valid
+            string arrayReg = instruction.substr(5, 2);
+            if (arrayRegisterMap.find(arrayReg) == arrayRegisterMap.end()) {
+                cout << "Invalid Array Register: " << arrayReg << endl;
+                return EXIT_SUCCESS;
+            }
+            //since array register is valid, get register and check if it is valid
+            string reg = instruction.substr(7, 3);
+            if (registerMap.find(reg) == registerMap.end()) {
+                cout << "Invalid Register: " << reg << endl;
+                return EXIT_SUCCESS;
+            }
+            //since array register and register are valid, check reg to make sure it contains a valid index (0-99)
+            if (registerMap[reg] > 99 || registerMap[reg] < 0) {
+                cout << "Invalid Index: " << registerMap[reg] << endl;
+                return EXIT_SUCCESS;
+            }
+            //since everything is valid, multiply from acc
+            acc *= (arrayRegisterMap[arrayReg])[(registerMap[reg])];
         }
         else if (opcode == "01010") {
             <#statements#>
@@ -123,7 +193,7 @@ int main() {
         }
         else {
             cout << "Invalid Opcode: " << opcode << endl;
-            return;
+            return EXIT_SUCCESS;
         }
     }
     
