@@ -58,11 +58,12 @@ Custom assembly language with car themed syntax.
       > COILOVER 1    
 * **Skip Gear** 
   - Summary: Skips next line of code based on condition: 
+    - Syntax: 
+      > SKIPGEAR (C)
     - 000: Skips if AC < 0
     - 400: Skips if AC = 0
     - 800: Skips if AC > 0
-     - Syntax: 
-        > SKIPGEAR (C)
+       
 ### Data Transfering
 * **Fuel**
   - Summary: Loads register value into acc.
@@ -84,10 +85,10 @@ Custom assembly language with car themed syntax.
 * **Flush**
   - Summary: Sets value in register to 0.
     - Syntax:
-    > FLUSH R1
+      > FLUSH R1
 * **Burn Out**
   - Summary: Sets value in index of array to 0.
     - Syntax: 
-    > BURNOUT AR1 R1
+      > BURNOUT AR1 R1
   
   
