@@ -17,6 +17,9 @@ using namespace std;
 // Postconditions: The valid filename is used to create a binary file that the simulator will use.
 void codeToBinary(string codeFileName, unordered_map<string, string> registerMap, unordered_map<string, string> arrayRegisterMap, unordered_map<string, string> opcodeMap);
 //***************************************************************************************************************
+//Summary: takes in a string of an integer and returns that integer in binary form
+string decToBin(string num);
+//***************************************************************************************************************
 
 //MAIN
 //***************************************************************************************************************
@@ -40,6 +43,9 @@ int main() {
     arrayRegisterMap["AR4"] = "11";
     
     unordered_map<string, string> opcodeMap;
+    //format is opcode, register, integer
+    opcodeMap["INJECT"] = "10011";
+    
     //format is opcode
     opcodeMap["INTAKE"] = "00000";
     opcodeMap["EXHAUST"] = "00001";
@@ -66,7 +72,7 @@ int main() {
     opcodeMap["BURNOUT"] = "10010";
     
     //convert code to binary
-    string fileToBeConverted = "tester.txt";
+    string fileToBeConverted = "benchmark1.txt";
     codeToBinary(fileToBeConverted, registerMap, arrayRegisterMap, opcodeMap);
     
     return EXIT_SUCCESS;
@@ -98,21 +104,40 @@ void codeToBinary(string codeFileName, unordered_map<string, string> registerMap
             return;
         }
         //add binary to binary.txt based on formats
+        else if (opcode == "INJECT") {
+            string reg;
+            codeFile >> reg;
+            //check if register is invalid
+            if (registerMap.find(reg) == registerMap.end()) {
+                cout << "Invalid Register: " << reg << endl;
+                return;
+            }
+            //take in number to store in register
+            int num;
+            codeFile >> num;
+            if (num > 255) {
+                cout << "Number is to large to store in register: " << num << endl;
+                return;
+            }
+            
+            //all is valid so write into binary file
+            binaryFile << opcodeMap[opcode] << registerMap[reg] << decToBin(to_string(num)) << endl;
+        }
         else if (opcode == "SKIPGEAR") {
             string condition = "";
             codeFile >> condition;
-            if (condition != 100 && condition != 200 && condition != 300) {
+            if (condition != "100" && condition != "200" && condition != "300") {
                 cout << "Invalid Condition: " << condition << endl;
-                return EXIT_SUCCESS;
+                return;
             }
-            if (condition == 100) {
-                binaryFile << opcodeMap[opcode] << "100" << "00000000\n"
+            if (condition == "100") {
+                binaryFile << opcodeMap[opcode] << "100" << "00000000\n";
             }
-            else if (condition == 200) {
-                binaryFile << opcodeMap[opcode] << "110" << "00000000\n"
+            else if (condition == "200") {
+                binaryFile << opcodeMap[opcode] << "110" << "00000000\n";
             }
-            else if (condition == 100) {
-                binaryFile << opcodeMap[opcode] << "111" << "00000000\n"
+            else if (condition == "300") {
+                binaryFile << opcodeMap[opcode] << "111" << "00000000\n";
             }
         }
         else if (opcode == "INTAKE" || opcode == "EXHAUST" || opcode == "BRAKE") {
@@ -159,5 +184,31 @@ void codeToBinary(string codeFileName, unordered_map<string, string> registerMap
     binaryFile.close();
     //inform that assembly was successful
     cout << "Code Successfully Assembled\n";
+}
+//***************************************************************************************************************
+
+//***************************************************************************************************************
+//Summary: takes in a string of an integer and returns that integer in binary form
+string decToBin(string num) {
+    
+    int decNum = stoi(num);
+    if (decNum == 0) {
+        return "00000000";
+    }
+    string toReturn = "";
+    while (decNum != 0) {
+        if ( (decNum % 2) == 0 ) {
+            toReturn.append("0");
+        }
+        else {
+            toReturn.append("1");
+        }
+        decNum /= 2;
+    }
+    reverse(toReturn.begin(), toReturn.end());
+    while (toReturn.length() < 8) {
+        toReturn = "0" + toReturn;
+    }
+    return toReturn;
 }
 //***************************************************************************************************************

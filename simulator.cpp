@@ -11,7 +11,13 @@
 #include <string>
 #include <vector>
 #include <unordered_set>
+#include <stack>
 using namespace std;
+
+//***************************************************************************************************************
+//summary: This function takes in a string of a binary number and returns a string of that number in decimal.
+string binToDec(string bin);
+//***************************************************************************************************************
 
 //MAIN
 //***************************************************************************************************************
@@ -135,7 +141,7 @@ int main() {
             cout << reg << " is not a valid register" << endl;
             return EXIT_SUCCESS;
           }
-            binaryFile.close()
+            binaryFile.close();
             binaryFile.open(binaryFileName);
           for(int i = 0; i < registerMap[reg] - 1; ++i){
               binaryFile >> instruction;
@@ -148,7 +154,7 @@ int main() {
             binaryFile >> instruction;
           else if(cond == "110" && acc == 0)
             binaryFile >> instruction;
-          else if(cond = "111" && acc > 0)
+          else if(cond == "111" && acc > 0)
             binaryFile >> instruction;
         }
 
@@ -163,7 +169,7 @@ int main() {
         }
 
         else if (opcode == "01111") {
-            string reg = instruction.substr(5,3)
+            string reg = instruction.substr(5,3);
             if(registerMap.find(reg)== registerMap.end()){
                 cout<< "Invalid Register Map: " << reg <<endl;
                 return EXIT_SUCCESS;
@@ -178,7 +184,7 @@ int main() {
         // Preconditions: Checks if the Register Map is valid.
         // Postconditions: If valid set the found Register Map equal to 0.
         else if (opcode == "10001") {
-            string reg = instruction.substr(5,3)
+            string reg = instruction.substr(5,3);
             if(registerMap .find(reg) == registerMap.end()){
                 cout<< "Invalid Register Map: " << reg <<endl;
                 return EXIT_SUCCESS;
@@ -289,13 +295,13 @@ int main() {
         // Preconditions: Checks if the Array Register Map and the Register Map is valid.
         // Postconditions: If both are valid then, set the Register Map to the Acc.
         else if (opcode == "10000") {
-            string arrReg = instructions.substr(5,2);
+            string arrReg = instruction.substr(5,2);
             if(arrayRegisterMap.find(arrReg) == arrayRegisterMap.end()){
                 cout<<"Invalid Array Register Map: "<<arrReg<<endl;
                 return EXIT_SUCCESS;
             }
             else{
-                string reg = instructions.substr(7,3);
+                string reg = instruction.substr(7,3);
                 if(registerMap.find(reg)== registerMap.end()){
                     cout<<"Invalid Register Map: "<< reg <<endl;
                     return EXIT_SUCCESS;
@@ -311,13 +317,13 @@ int main() {
         // Preconditions:Checks if the Array Register Map and the Register Map is valid.
         // Postconditions: If both are valid then, set the Register Map to 0.
         else if (opcode == "10010") {
-            string arrReg = instructions.substr(5,2);
+            string arrReg = instruction.substr(5,2);
             if(arrayRegisterMap.find(arrReg) == arrayRegisterMap.end()){
                 cout<<"Invalid Array Register Map: "<<arrReg<<endl;
                 return EXIT_SUCCESS;
             }
             else{
-                string reg = instructions.substr(7,3);
+                string reg = instruction.substr(7,3);
                 if(registerMap.find(reg)== registerMap.end()){
                     cout<<"Invalid Register Map: "<< reg <<endl;
                     return EXIT_SUCCESS;
@@ -326,6 +332,20 @@ int main() {
                     registerMap[reg] = 0;
                 }
             }
+        }
+        //***************************************************************************************************************
+        else if (opcode == "10011") {
+            //get register and check if it is valid
+            string reg = instruction.substr(5, 3);
+            if (registerMap.find(reg) == registerMap.end()) {
+                cout << "Invalid Register: " << reg << endl;
+                return EXIT_SUCCESS;
+            }
+            //get integer to store
+            string num = instruction.substr(8, 8);
+            
+            //insert value into register
+            registerMap[reg] = stoi(binToDec(num));
         }
         //***************************************************************************************************************
         else {
@@ -340,3 +360,26 @@ int main() {
     return EXIT_SUCCESS;
 }
 //***************************************************************************************************************
+
+//**********************************************************************
+//summary: This function takes in a string of a binary number and returns a string of that number in decimal.
+string binToDec(string bin) {
+    if (bin == "0") {
+        return bin;
+    }
+    stack<char> binStack;
+    for (int i = 0; i < bin.length(); i++) {
+        binStack.push(bin[i]);
+    }
+    int multiplier = 1;
+    int sum = 0;
+    while (!binStack.empty()) {
+        if (binStack.top() == '1') {
+            sum += multiplier;
+        }
+        binStack.pop();
+        multiplier *= 2;
+    }
+    return to_string(sum);
+}
+//**********************************************************************
