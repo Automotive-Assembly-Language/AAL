@@ -58,6 +58,16 @@ int main() {
 
     //go through binary.txt file and simulate code
     while (!binaryFile.eof()) {
+//        
+//        //print registers
+//        cout << "R1: " << registerMap["000"] << endl;
+//        cout << "R2: " << registerMap["001"] << endl;
+//        cout << "R3: " << registerMap["010"] << endl;
+//        cout << "R4: " << registerMap["011"] << endl;
+//        cout << "R5: " << registerMap["100"] << endl;
+//        cout << "R6: " << registerMap["101"] << endl;
+//        cout << "R7: " << registerMap["110"] << endl;
+//        cout << "R8: " << registerMap["111"] << endl;
 
         //take in instruction
         string instruction;
@@ -307,7 +317,7 @@ int main() {
                     return EXIT_SUCCESS;
                 }
                 else{
-                    registerMap[reg] = acc;
+                    (arrayRegisterMap[arrReg])[registerMap[reg]] = acc;
                 }
             }
         }

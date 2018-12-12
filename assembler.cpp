@@ -11,6 +11,11 @@
 #include <string>
 using namespace std;
 
+//FILE WITH CODE TO ASSEMBLE
+//***************************************************************************************************************
+static const string FILETOBECONVERTED = "benchmark2.txt";
+//***************************************************************************************************************
+
 //CONVERSION FUNCTION
 //***************************************************************************************************************
 // Preconditions: Takes in valid file name, and three maps pertaining to registers, array registers, and opcodes.
@@ -72,8 +77,7 @@ int main() {
     opcodeMap["BURNOUT"] = "10010";
     
     //convert code to binary
-    string fileToBeConverted = "benchmark1.txt";
-    codeToBinary(fileToBeConverted, registerMap, arrayRegisterMap, opcodeMap);
+    codeToBinary(FILETOBECONVERTED, registerMap, arrayRegisterMap, opcodeMap);
     
     return EXIT_SUCCESS;
 }
