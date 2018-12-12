@@ -93,5 +93,10 @@ ________________________________________________________________________________
   - Summary: Sets value in index of array to 0.
     - Syntax: 
       > BURNOUT AR1 R1
+* **Inject**
+  - Summary: Sets register to value.
+    - Syntax:
+      >INJECT R1 13
+      
   
   
