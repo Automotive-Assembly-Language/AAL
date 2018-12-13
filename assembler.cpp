@@ -13,7 +13,7 @@ using namespace std;
 
 //FILE WITH CODE TO ASSEMBLE
 //***************************************************************************************************************
-static const string FILETOBECONVERTED = "benchmark2.txt";
+static const string FILETOBECONVERTED = "benchmarkTester.txt";
 //***************************************************************************************************************
 
 //CONVERSION FUNCTION
@@ -29,7 +29,7 @@ string decToBin(string num);
 //MAIN
 //***************************************************************************************************************
 int main() {
-    
+
     //CREATE REGISTER, ARRAY, AND OPCODE REGISTER MAPPINGS
     unordered_map<string, string> registerMap;
     registerMap["R1"] = "000";
@@ -40,22 +40,22 @@ int main() {
     registerMap["R6"] = "101";
     registerMap["R7"] = "110";
     registerMap["R8"] = "111";
-    
+
     unordered_map<string, string> arrayRegisterMap;
     arrayRegisterMap["AR1"] = "00";
     arrayRegisterMap["AR2"] = "01";
     arrayRegisterMap["AR3"] = "10";
     arrayRegisterMap["AR4"] = "11";
-    
+
     unordered_map<string, string> opcodeMap;
     //format is opcode, register, integer
     opcodeMap["INJECT"] = "10011";
-    
+
     //format is opcode
     opcodeMap["INTAKE"] = "00000";
     opcodeMap["EXHAUST"] = "00001";
     opcodeMap["BRAKE"] = "00010";
-    
+
     //format is opcode, register
     opcodeMap["ACCELLERATE"] = "00011";
     opcodeMap["DECELLERATE"] = "00101";
@@ -66,7 +66,7 @@ int main() {
     opcodeMap["FUEL"] = "01101";
     opcodeMap["CONSOLE"] = "01111";
     opcodeMap["FLUSH"] = "10001";
-    
+
     //format is opcode, array register, register
     opcodeMap["UPSHIFT"] = "00100";
     opcodeMap["DOWNSHIFT"] = "00110";
@@ -75,10 +75,10 @@ int main() {
     opcodeMap["REFUEL"] = "01110";
     opcodeMap["TRUNK"] = "10000";
     opcodeMap["BURNOUT"] = "10010";
-    
+
     //convert code to binary
     codeToBinary(FILETOBECONVERTED, registerMap, arrayRegisterMap, opcodeMap);
-    
+
     return EXIT_SUCCESS;
 }
 //***************************************************************************************************************
@@ -86,7 +86,7 @@ int main() {
 //CONVERSION FUNCTION
 //***************************************************************************************************************
 void codeToBinary(string codeFileName, unordered_map<string, string> registerMap, unordered_map<string, string> arrayRegisterMap, unordered_map<string, string> opcodeMap) {
-    
+
     //file being opened to read automotive assembly code from
     ifstream codeFile(codeFileName);
     if (codeFile.fail()) {
@@ -95,10 +95,10 @@ void codeToBinary(string codeFileName, unordered_map<string, string> registerMap
     }
     //file being opened to hold binary representation of the code file
     ofstream binaryFile("binary.txt");
-    
+
     //go through code file and convert it to 1s and 0s to be saved to the binary file
     while (!codeFile.eof()) {
-        
+
         //take in opcode
         string opcode;
         codeFile >> opcode;
@@ -123,7 +123,7 @@ void codeToBinary(string codeFileName, unordered_map<string, string> registerMap
                 cout << "Number is to large to store in register: " << num << endl;
                 return;
             }
-            
+
             //all is valid so write into binary file
             binaryFile << opcodeMap[opcode] << registerMap[reg] << decToBin(to_string(num)) << endl;
         }
@@ -178,7 +178,7 @@ void codeToBinary(string codeFileName, unordered_map<string, string> registerMap
                 cout << "Invalid Register: " << reg << endl;
                 return;
             }
-            
+
             //add items to binary file with format: opcode followed by arrayRegister followed by register
             binaryFile << opcodeMap[opcode] << arrayRegisterMap[arrayReg] << registerMap[reg] << "000000\n";
         }
@@ -194,7 +194,7 @@ void codeToBinary(string codeFileName, unordered_map<string, string> registerMap
 //***************************************************************************************************************
 //Summary: takes in a string of an integer and returns that integer in binary form
 string decToBin(string num) {
-    
+
     int decNum = stoi(num);
     if (decNum == 0) {
         return "00000000";

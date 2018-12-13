@@ -26,6 +26,9 @@ int main() {
     //CREATE ACCUMULATOR REGISTER
     int acc = 0;
 
+    //LINE NUMBER THAT CODE IS CURRENTLY RUNNING
+    int line = 0;
+
     //CREATE REGISTER, ARRAY, AND OPCODE REGISTER MAPPINGS
     unordered_map<string, int> registerMap;
     registerMap["000"] = 0;
@@ -58,16 +61,8 @@ int main() {
 
     //go through binary.txt file and simulate code
     while (!binaryFile.eof()) {
-//        
-//        //print registers
-//        cout << "R1: " << registerMap["000"] << endl;
-//        cout << "R2: " << registerMap["001"] << endl;
-//        cout << "R3: " << registerMap["010"] << endl;
-//        cout << "R4: " << registerMap["011"] << endl;
-//        cout << "R5: " << registerMap["100"] << endl;
-//        cout << "R6: " << registerMap["101"] << endl;
-//        cout << "R7: " << registerMap["110"] << endl;
-//        cout << "R8: " << registerMap["111"] << endl;
+        //increment line NUMBER
+        line++;
 
         //take in instruction
         string instruction;
@@ -153,28 +148,36 @@ int main() {
           }
             binaryFile.close();
             binaryFile.open(binaryFileName);
+            line = 0;
           for(int i = 0; i < registerMap[reg] - 1; ++i){
+              line++;
               binaryFile >> instruction;
           }
         }
 
         else if (opcode == "01100") {
           string cond = instruction.substr(5,3);
-          if(cond == "100" && acc < 0)
+          if(cond == "100" && acc < 0) {
+            line++;
             binaryFile >> instruction;
-          else if(cond == "110" && acc == 0)
+          }
+          else if(cond == "110" && acc == 0) {
+            line++;
             binaryFile >> instruction;
-          else if(cond == "111" && acc > 0)
+          }
+          else if(cond == "111" && acc > 0) {
+            line++;
             binaryFile >> instruction;
+          }
         }
 
         else if (opcode == "01101") {
           string reg = instruction.substr(5,3);
           auto it = registerMap.find(reg);
-          if(it == registerMap.end()){
+          if(it == registerMap.end()) {
               cout << reg << " is not a valid register" << endl;
               return EXIT_SUCCESS;
-              }
+          }
           acc = registerMap[reg];
         }
 
@@ -286,7 +289,7 @@ int main() {
 
         else if (opcode == "01110") {
           string arrReg = instruction.substr(5,2);
-          string reg = instruction.substr(9,3);
+          string reg = instruction.substr(7,3);
           auto itArray = arrayRegisterMap.find(arrReg);
           auto itRef = registerMap.find(reg);
           if(itArray == arrayRegisterMap.end()){
@@ -297,7 +300,7 @@ int main() {
             cout << reg << " is not a valid register" << endl;
             return EXIT_SUCCESS;
         }
-          acc = arrayRegisterMap[arrReg][registerMap[reg]];
+          acc = ((arrayRegisterMap[arrReg])[registerMap[reg]]);
         }
         //***************************************************************************************************************
         //TRUNK FUNCTION
@@ -353,7 +356,7 @@ int main() {
             }
             //get integer to store
             string num = instruction.substr(8, 8);
-            
+
             //insert value into register
             registerMap[reg] = stoi(binToDec(num));
         }
@@ -362,6 +365,7 @@ int main() {
             cout << "Invalid Opcode: " << opcode << endl;
             return EXIT_SUCCESS;
         }
+
     }
 
     //close binary file
